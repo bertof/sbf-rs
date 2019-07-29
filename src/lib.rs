@@ -11,6 +11,9 @@ use serde::{Deserialize, Serialize};
 use byteorder::ReadBytesExt;
 use std::collections::HashMap;
 
+pub mod hierarchy;
+
+
 #[derive(Clone, Debug, Deserialize, Eq, PartialEq, Serialize)]
 struct HSBF {
     /// Number of unique values that can
@@ -148,7 +151,7 @@ impl HSBF {
 #[cfg(test)]
 mod tests {
     use crate::HSBF;
-    use std::fs;
+    use std::{fs, panic};
     use std::io::Read;
 
     #[test]
