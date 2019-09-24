@@ -1,4 +1,4 @@
-extern crate byteorder;
+/*extern crate byteorder;
 extern crate md5;
 extern crate rand;
 extern crate serde;
@@ -11,9 +11,12 @@ use serde::{Deserialize, Serialize};
 use byteorder::ReadBytesExt;
 use std::collections::HashMap;
 
-pub mod hierarchy;
+pub mod hierarchy;*/
+pub mod sbf;
+pub mod common;
 
 
+/*
 #[derive(Clone, Debug, Deserialize, Eq, PartialEq, Serialize)]
 struct HSBF {
     /// Number of unique values that can
@@ -27,7 +30,9 @@ struct HSBF {
     /// Counter for each insert in each area
     stat_inserts: HashMap<u8, usize>,
 }
+*/
 
+/*
 impl HSBF {
     pub fn new(filter_size: usize, areas: u8, hashes: usize, name_length: u32) -> HSBF {
         let mut rng = rand::thread_rng();
@@ -147,12 +152,15 @@ impl HSBF {
         return self.map.get(index).expect("Filter index out of range");
     }
 }
+*/
 
+/*
 #[cfg(test)]
 mod tests {
-    use crate::HSBF;
     use std::{fs, panic};
     use std::io::Read;
+
+    use crate::HSBF;
 
     #[test]
     fn test_set_cell() {
@@ -233,3 +241,5 @@ mod tests {
         assert_eq!(hsbf.check("TestInsert"), 5)
     }
 }
+*/
+
