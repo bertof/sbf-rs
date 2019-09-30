@@ -1,6 +1,6 @@
 [package]
-name = "hsbf"
-version = "0.1.0"
+name = "sbf"
+version = "0.2"
 authors = ["Filippo Berto <berto.f@protonmail.com>"]
 edition = "2018"
 publish = false
@@ -14,17 +14,13 @@ md4_hash = ["md4"]
 metrics = []
 
 [dependencies]
-base64 = "0.10.1"
-byteorder = "1.3.2"
-itertools = "0.8.0"
-log = "0.4.6"
-md5 = {version = "0.6.1", optional = true}
-md4 = {version = "0.8.0", optional = true}
-num = "0.2.0"
+base64 = "0.10"
+byteorder = "1.3"
+md5 = {version = "0.6", optional = true}
+md4 = {version = "0.8", optional = true}
+num = "0.2"
 rand = "0.7"
-rayon = "1.2.0"
+rayon = "1.2"
 serde = { version="1.0", features=["derive"] }
 serde_json = "1.0"
 
-[dev-dependencies]
-env_logger = "0.7.0"
