@@ -388,7 +388,17 @@ impl<U> SBF<U> where
             },
         })
     }
-    pub fn new_optimal() -> Result<Self, error::Error> { unimplemented!() }
+    pub fn new_optimal(expected_inserts: usize, area_number: U, max_fpp: f64, max_input_size: usize, hash_function: HashFunction) -> Result<Self, error::Error> {
+        let cells = ((-(expected_inserts as f64) * max_fpp.ln()) / 2.0f64.ln().powi(2)) as usize;
+        let hash_number = ((cells / expected_inserts) as f64 * 2.0f64.ln()).ceil() as usize;
+        Self::new(
+            U::from_usize(cells).ok_or(IndexOutOfBounds)?,
+            hash_number,
+            max_input_size,
+            hash_function,
+            area_number,
+        )
+    }
     /// Check an input for presence in the filter.
     /// It will return `0` if the input is not been inserted or the index of the area it belongs to
     /// if it has been inserted previously.
