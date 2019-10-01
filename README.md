@@ -1,6 +1,8 @@
 # Spatial Bloom Filter
 [![pipeline status](https://gitlab.com/bertof/sbf-rs/badges/master/pipeline.svg)](https://gitlab.com/bertof/sbf-rs/commits/master)
 [![coverage report](https://gitlab.com/bertof/sbf-rs/badges/master/coverage.svg)](https://gitlab.com/bertof/sbf-rs/commits/master)
+[![Crate](https://img.shields.io/crates/v/sbf.svg)](https://crates.io/crates/sbf)
+[![API](https://docs.rs/sbf/badge.svg)](https://docs.rs/sbf)
 
 SBF is a probabilistic data structure
 that maps elements of a space to indexed disjoint subsets of that space.

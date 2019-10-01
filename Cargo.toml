@@ -12,6 +12,7 @@ keywords = ["probabilistic", "data", "mapping"]
 categories = ["data-structures"]
 license = "MIT OR Apache-2.0"
 readme = "README.md"
+documentation = "https://docs.rs/sbf"
 
 [features]
 default = ["md5_hash"]
