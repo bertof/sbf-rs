@@ -7,12 +7,11 @@ homepage = "https://github.com/bertof/sbf-rs"
 description = """
 Spatial Bloom Filter, a probabilistic data structure
 that maps elements of a space to indexed disjoint subsets of that space.
-
-This is a reimplementation of the [C library](https://github.com/spatialbloomfilter/libSBF-cpp)
 """
 keywords = ["probabilistic", "data", "mapping"]
 categories = ["data-structures"]
 license = "MIT OR Apache-2.0"
+readme = "README.md"
 
 [features]
 default = ["md5_hash"]
