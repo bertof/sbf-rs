@@ -1,4 +1,5 @@
 use std::{io::Cursor, ops};
+use std::sync::Mutex;
 
 use byteorder::ReadBytesExt;
 #[cfg(feature = "md4_hash")]
@@ -280,12 +281,16 @@ impl<U> SBF<U> where
     ) -> Result<Self, common::Error> {
 
         // Cryptography safe RNG
-        let mut rng = OsRng;
+        let rng = Mutex::new(OsRng);
 
         // Generate hash salts
-        let salts = (0..hash_number).map(|_| {
-            (0..max_input_size).map(|_| rng.gen()).collect::<Salt>()
-        }).collect::<Vec<Salt>>();
+        let salts = (0..hash_number)
+            .into_par_iter()
+            .map(|_| (0..max_input_size)
+                .into_par_iter()
+                .map(|_| rng.lock().unwrap().gen())
+                .collect::<Salt>())
+            .collect::<Vec<Salt>>();
 
         Ok(SBF {
             filter: vec![U::zero(); cells.to_usize().ok_or(IndexOutOfBounds)?],
