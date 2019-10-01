@@ -270,6 +270,7 @@ impl<U> SBF<U> where
         }
     }
 
+    #[allow(unused_variables)]
     pub fn new(
         cells: U,
         hash_number: usize,
