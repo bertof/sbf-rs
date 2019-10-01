@@ -1,5 +1,8 @@
+//! Convenience error module
+
 use std::{error, fmt};
 
+/// Custom error definitions
 #[derive(Debug, Eq, PartialEq)]
 pub enum Error {
     IndexOutOfBounds,
