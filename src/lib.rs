@@ -23,6 +23,7 @@ use num::{
 };
 use rand::{Rng, rngs::OsRng};
 use rayon::{iter::repeatn, prelude::*};
+#[cfg(feature = "json")]
 use serde::{Deserialize, Serialize};
 
 use crate::error::{Error::IndexOutOfBounds};
@@ -37,7 +38,8 @@ pub type Salt = Vec<u8>;
 /// The kind of hashing function that is used by the data structure
 ///
 /// By default only MD5 is enabled, MD4 can be enabled by using the `md4_hash` feature.
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug)]
+#[cfg_attr(feature = "json", derive(Serialize, Deserialize))]
 pub enum HashFunction {
     #[cfg(feature = "md5_hash")]
     MD5,
@@ -50,7 +52,8 @@ pub enum HashFunction {
 /// This data structure is automatically added to each `SBF` if the feature `metrics` is enabled.
 /// It's not necessary and is disabled by default.
 #[cfg(feature = "metrics")]
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug)]
+#[cfg_attr(feature = "json", derive(Serialize, Deserialize))]
 pub struct Metrics {
     /// Number of cells in the filter, the size of the filter
     cells: usize,
@@ -236,7 +239,8 @@ impl Metrics {
 /// inserted in the filter and of which of a finite number of disjoint subsets of the origin space
 /// it belongs to.
 /// This is a probabilistic data structure
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug)]
+#[cfg_attr(feature = "json", derive(Serialize, Deserialize))]
 pub struct SBF<U> where U: Unsigned + Bounded + Clone + Copy + PartialOrd + Eq {
     salts: Vec<Salt>,
     filter: Vec<U>,
@@ -440,25 +444,35 @@ mod tests {
     fn test_sbf() -> Result<(), Box<dyn Error>> {
         let mut sbf = SBF::new(10 as u8, 2, 5,
                                HashFunction::MD5, 3)?;
-        println!("{}", serde_json::to_string(&sbf)?);
+        #[cfg(feature = "json")] {
+            println!("{}", serde_json::to_string(&sbf)?);
+        }
         assert!(sbf.filter.par_iter().all(|v| *v == 0));
 
         sbf.insert("test".as_bytes().to_vec(), 1).expect("Correct insertion of an area");
-        println!("{}", serde_json::to_string(&sbf)?);
+        #[cfg(feature = "json")] {
+            println!("{}", serde_json::to_string(&sbf)?);
+        }
         let count = sbf.filter.par_iter().cloned().filter(|v| *v == 1).count();
         assert!(2 >= count && count > 0);
         let filter = sbf.filter.clone();
 
         sbf.insert("test".as_bytes().to_vec(), 1).expect("Correct insertion of an area");
-        println!("{}", serde_json::to_string(&sbf)?);
+        #[cfg(feature = "json")] {
+            println!("{}", serde_json::to_string(&sbf)?);
+        }
         assert_eq!(filter, sbf.filter);
 
         sbf.insert("test1".as_bytes().to_vec(), 2).expect("Correct insertion of an area");
-        println!("{}", serde_json::to_string(&sbf)?);
+        #[cfg(feature = "json")] {
+            println!("{}", serde_json::to_string(&sbf)?);
+        }
         let filter = sbf.filter.clone();
 
         sbf.insert("test1".as_bytes().to_vec(), 2).expect("Correct insertion of an area");
-        println!("{}", serde_json::to_string(&sbf)?);
+        #[cfg(feature = "json")] {
+            println!("{}", serde_json::to_string(&sbf)?);
+        }
         assert_eq!(filter, sbf.filter);
 
         #[cfg(feature = "metrics")] {
@@ -466,8 +480,9 @@ mod tests {
             sbf.metrics.set_prior_area_fpp();
             sbf.metrics.set_area_isep();
             sbf.metrics.set_prior_area_isep();
-            println!("{}", serde_json::to_string(&sbf)?);
-
+            #[cfg(feature = "json")] {
+                println!("{}", serde_json::to_string(&sbf)?);
+            }
             println!("AREA MEMBERS: {:?}", sbf.metrics.get_area_members(1));
             assert_eq!(2, sbf.metrics.get_area_members(1));
 

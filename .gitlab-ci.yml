@@ -9,13 +9,13 @@ stages:
 
 check:
   script:
-    - cargo check --all --tests
+    - cargo check --all --tests --all-features
   only:
     - tags
 
 test:
   script:
-    - cargo test --all
+    - cargo test --all --all-features
   only:
     - tags
 

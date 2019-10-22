@@ -17,6 +17,7 @@ This crate allows the following features:
 
 - `md4_hash` Allows to use a md4 based hashing algorithm;
 - `md5_hash` Allows to use a md5 based hashing algorithm;
+- `json` Allows to export and import a filter as a JSON encoded string;
 - `metrics` Generates and updates an internal metrics object, useful in simulations and benchmarks of the library.
 
 By default only `md5_hash` is enabled.
