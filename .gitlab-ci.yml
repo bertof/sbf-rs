@@ -1,0 +1,24 @@
+image: rust
+
+before_script:
+  - cargo version
+
+stages:
+  - check
+  - test
+
+check:
+  script:
+    - cargo check --all --tests
+  only:
+    - tags
+
+test:
+  script:
+    - cargo test --all
+  only:
+    - tags
+
+cache:
+  paths:
+    - target/debug
