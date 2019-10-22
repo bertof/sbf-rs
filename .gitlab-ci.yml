@@ -12,12 +12,14 @@ check:
     - cargo check --all --tests --all-features
   only:
     - tags
+    - master
 
 test:
   script:
     - cargo test --all --all-features
   only:
     - tags
+    - master
 
 cache:
   paths:
