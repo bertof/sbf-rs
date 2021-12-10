@@ -8,15 +8,34 @@ stages:
   - test
 
 check:
+  stage: check
   script:
-    - cargo check --all --tests --all-features
+    - rustup component add clippy
+    - cargo clippy --all --tests --all-features
+  cache:
+    paths:
+      - target/
+      - ~/.cargo/git
+      - ~/.cargo/registry
   only:
     - tags
     - master
 
 test:
+  stage: test
   script:
-    - cargo test --all --all-features
+    - cargo install cargo-tarpaulin
+    - cargo tarpaulin --all --all-features
+  cache:
+    paths:
+      - target/
+      - ~/.cargo/git
+      - ~/.cargo/registry
+  coverage: '/^\d+.\d+% coverage/'
+  artifacts:
+    reports:
+      cobertura:
+        - cobertura.xml
   only:
     - tags
     - master
