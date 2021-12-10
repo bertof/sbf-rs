@@ -7,7 +7,7 @@ use crate::types::HashFunction;
 
 #[test]
 fn test_sbf() -> Result<(), Box<dyn Error>> {
-    let mut sbf = SBF::new(10 as u8, 2, 5,
+    let mut sbf = SBF::new(10u8, 2, 5,
                            HashFunction::MD5, 3)?;
     #[cfg(feature = "serde_support")] {
         println!("{}", serde_json::to_string(&sbf)?);
