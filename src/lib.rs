@@ -4,7 +4,7 @@
 //! This is a reimplementation of the [C library](https://github.com/spatialbloomfilter/libSBF-cpp)
 //! by the original research group.
 
-#![warn(
+#![deny(
 // Harden built-in lints
 missing_copy_implementations,
 missing_debug_implementations,
@@ -12,24 +12,16 @@ missing_docs,
 unreachable_pub,
 
 // Harden clippy lints
-clippy::cargo_common_metadata,
-clippy::clone_on_ref_ptr,
-clippy::dbg_macro,
-clippy::decimal_literal_representation,
-clippy::float_cmp_const,
-clippy::get_unwrap,
-clippy::integer_arithmetic,
-clippy::integer_division,
-clippy::print_stdout,
+clippy::all,
 )]
 
+#[cfg(feature = "metrics")]
+pub use metrics::Metrics;
 pub use {
     data_structure::SBF,
     error::Error,
     types::{HashFunction, Salt},
 };
-#[cfg(feature = "metrics")]
-pub use metrics::Metrics;
 
 pub mod data_structure;
 pub mod error;
@@ -39,4 +31,3 @@ pub mod types;
 
 #[cfg(test)]
 mod tests;
-
