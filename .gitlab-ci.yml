@@ -9,14 +9,20 @@ stages:
 
 check:
   script:
-    - cargo check --all --tests --all-features
+    - cargo clippy --all --tests --all-features
   only:
     - tags
     - master
 
 test:
   script:
-    - cargo test --all --all-features
+    - cargo install cargo-tarpaulin
+    - cargo tarpaulin --all --all-features
+  coverage: '/^\d+.\d+% coverage/'
+  artifacts:
+    reports:
+      cobertura:
+        - cobertura.xml
   only:
     - tags
     - master
