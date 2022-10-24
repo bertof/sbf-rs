@@ -102,7 +102,6 @@ where
                     .unwrap();
 
                 // Return cell index
-                #[allow(clippy::integer_arithmetic)]
                 (digest_value as usize % self.filter.len()).as_()
             })
             .collect::<Vec<U>>()
@@ -126,7 +125,6 @@ where
             }
 
             #[cfg(feature = "metrics")]
-            #[allow(clippy::integer_arithmetic)]
             {
                 if *v == U::zero() {
                     // Cell is not marked
@@ -155,7 +153,6 @@ where
         }
     }
 
-    #[allow(unused_variables)]
     /// Constructor of the SBF data structure
     ///
     /// - `cells`: Number of cells in the filter,
@@ -168,7 +165,7 @@ where
         hash_number: usize,
         max_input_size: usize,
         hash_function: HashFunction,
-        area_number: U,
+        #[cfg(feature = "metrics")] area_number: U,
     ) -> Result<Self, Error> {
         assert!(cells > U::zero());
 
@@ -224,10 +221,10 @@ where
     /// Constructor of the SBF data structure using optimal parameters
     pub fn new_optimal(
         expected_inserts: usize,
-        area_number: U,
         max_fpp: f64,
         max_input_size: usize,
         hash_function: HashFunction,
+        #[cfg(feature = "metrics")] area_number: U,
     ) -> Result<Self, Error> {
         let optimal_cells =
             (-(expected_inserts as f64) * max_fpp.ln() / (2.0f64.ln().powi(2))) as u64;
@@ -238,6 +235,7 @@ where
             hash_number,
             max_input_size,
             hash_function,
+            #[cfg(feature = "metrics")]
             area_number,
         )
     }
